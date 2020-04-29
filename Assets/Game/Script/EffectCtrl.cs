@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using Sokkayo;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class EffectCtrl : MonoBehaviour
@@ -18,6 +20,8 @@ public class EffectCtrl : MonoBehaviour
 
     private float _motionTime = 0;
 
+    private MotionBlurEffect motionBlur;
+
     private void Awake()
     {
         motionBlurBtn.onClick.AddListener(MotionBlurClick);
@@ -26,6 +30,14 @@ public class EffectCtrl : MonoBehaviour
     private void MotionBlurClick()
     {
         _IsMove = true;
+
+        if(motionBlur == null)
+        {
+            motionBlur = new MotionBlurEffect(Camera.main);
+        }
+
+        motionBlur.SetColor();
+        motionBlur.ExecuteCmdBuffer(CameraEvent.BeforeFinalPass);
     }
 
     void LateUpdate()
