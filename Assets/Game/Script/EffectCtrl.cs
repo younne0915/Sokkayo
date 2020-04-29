@@ -18,6 +18,15 @@ public class EffectCtrl : MonoBehaviour
     [SerializeField]
     private float motionInterval = 2;
 
+    [SerializeField]
+    private Camera grabCam;
+
+    [SerializeField]
+    private RawImage image;
+
+    [SerializeField]
+    private Material mat;
+
     private float _motionTime = 0;
 
     private MotionBlurEffect motionBlur;
@@ -33,11 +42,11 @@ public class EffectCtrl : MonoBehaviour
 
         if(motionBlur == null)
         {
-            motionBlur = new MotionBlurEffect(Camera.main);
+            motionBlur = new MotionBlurEffect(grabCam);
         }
 
-        motionBlur.SetColor();
-        motionBlur.ExecuteCmdBuffer(CameraEvent.BeforeFinalPass);
+        motionBlur.SetColor(image, mat);
+        motionBlur.ExecuteCmdBuffer(CameraEvent.BeforeImageEffects);
     }
 
     void LateUpdate()

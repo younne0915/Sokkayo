@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 namespace Sokkayo
 {
@@ -9,13 +11,16 @@ namespace Sokkayo
             
         }
 
-        public void SetColor()
+        public void SetColor(RawImage image, Material mat)
         {
-            _cmdBuffer.Clear();
-            _cmdBuffer.BeginSample("EffectSystem");
-            _cmdBuffer.ClearRenderTarget(true, true, Color.clear);
-            _cmdBuffer.EndSample("EffectSystem");
-            Debug.LogErrorFormat("SetColor : {0}", _cmdBuffer);
+            RenderTexture renderTexture = new RenderTexture(_targetCamera.pixelWidth, _targetCamera.pixelHeight, 16,
+               RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            renderTexture.name = "GrabCamera Texture";
+            renderTexture.antiAliasing = 1;
+            renderTexture.Create();
+
+            _cmdBuffer.Blit(BuiltinRenderTextureType.CurrentActive, renderTexture, mat);
+            image.texture = renderTexture;
 
         }
     }
