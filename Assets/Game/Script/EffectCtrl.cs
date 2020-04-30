@@ -42,11 +42,11 @@ public class EffectCtrl : MonoBehaviour
 
         if(motionBlur == null)
         {
-            motionBlur = new MotionBlurEffect(grabCam);
+            motionBlur = new MotionBlurEffect(Camera.main);
         }
 
-        motionBlur.SetColor(image, mat);
-        motionBlur.ExecuteCmdBuffer(CameraEvent.BeforeImageEffects);
+        motionBlur.SetColor(image);
+        motionBlur.ExecuteCmdBuffer(CameraEvent.AfterEverything);
     }
 
     void LateUpdate()

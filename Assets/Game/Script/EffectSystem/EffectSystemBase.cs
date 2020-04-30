@@ -8,6 +8,7 @@ namespace Sokkayo
     {
         protected CommandBuffer _cmdBuffer;
         protected Camera _targetCamera;
+        protected Material _mat;
 
         public EffectSystemBase(Camera camera)
         {
@@ -21,6 +22,17 @@ namespace Sokkayo
             _targetCamera = camera;
         }
 
+        protected void CreateMat(Shader shader)
+        {
+            if (shader == null)
+            {
+                Debug.LogError("shader == null");
+            }
+            else
+            {
+                _mat = new Material(shader);
+            }
+        }
 
 
         public void ExecuteCmdBuffer(CameraEvent cameraEvent)
